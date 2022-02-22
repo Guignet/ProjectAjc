@@ -10,6 +10,7 @@ public class Category {
 		super();
 		this.name = name;
 		this.description = description;
+		DB.addCategory(this);
 	}
 	public String getName() {
 		return name;
@@ -22,6 +23,10 @@ public class Category {
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	public ArrayList<Idea> getIdeas() {
+		return ideas;
 	}
 	@Override
 	public String toString() {

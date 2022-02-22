@@ -1,5 +1,7 @@
 package guillaume;
 
+import java.util.Objects;
+
 public abstract class Account {
 	private static int nbAccount;
 	private String email;
@@ -21,12 +23,6 @@ public abstract class Account {
 	public static int getNbAccount() {
 		return nbAccount;
 	}
-
-
-	public static void setNbAccount(int nbAccount) {
-		Account.nbAccount = nbAccount;
-	}
-
 
 	public String getEmail() {
 		return email;
@@ -63,8 +59,43 @@ public abstract class Account {
 	}
 
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, id);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		return Objects.equals(email, other.email);
+	}
+
+
 	public void setId(int id) {
 		this.id = id;
+	}
+
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Account [email=");
+		builder.append(email);
+		builder.append(", password=");
+		builder.append(password);
+		builder.append(", isActivate=");
+		builder.append(isActivate);
+		builder.append(", id=");
+		builder.append(id);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

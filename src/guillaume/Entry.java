@@ -2,24 +2,39 @@ package guillaume;
 
 import java.util.ArrayList;
 
+import guillaume.exception.AccountNotActivatedException;
+
 public class Entry {
 
-	public static void main(String[] args) {
-		Account test = new Admin("test@gmail.com","toto");
-		Account test2 = new Admin("test@gmail.com","toto");
-		Account test3 = new Admin("test@gmail.com","toto");
-		System.out.println(test3);
+	public static void main(String[] args) throws AccountNotActivatedException {
+		DB.addAccount(new Admin("test@gmail.com","toto"));
+		DB.addAccount(new User("Couicou@gmail.com","toto"));
+		DB.addAccount(new User("Kikou","toto"));
 		
-		ArrayList<Account> a = new ArrayList<>();
-		a.add(test3);
-		a.add(test3);
-		a.add(test);
-		a.add(test2);
-		a.add(test2);
-		System.out.println(a.size());
-		a.remove(test2);
-		a.remove(test2);
-		System.out.println(a.size());
+		Admin master = ((Admin) DB.accounts.get(0));
+		User u1 = ((User) DB.accounts.get(1));
+		User u2 = ((User) DB.accounts.get(2));
+		
+		// Creating Category
+		master.createCategory("Biological", "This section is for biological innovation");;
+		master.createCategory("Tech", "This section is for Technological innovation");;
+		master.createCategory("Biological", "This section is for biological innovation");;
+		master.createCategory("Biological", "This section is for biological innovation");;
+		
+		// Activating Users
+		master.activateUser(((User) DB.accounts.get(1)));
+		master.activateUser(((User) DB.accounts.get(2)));
+		
+		
+		
+		((User) DB.accounts.get(1)).createIdea("BioPrinting",DB.categories.get("Biological") , "Imagine being able to recreate Human meber just by using a printer");
+		
+		((User) DB.accounts.get(2)).comment("c'est pas ouf je prefere les bras robotique", ((User) DB.accounts.get(1)).getIdeas().get(0));
+		System.out.println(DB.accounts);
+
+		master.deactivateIdea(u1.getIdeas().get(0));
+		System.out.println(DB.accounts);
+		
 	}
 
 }
